@@ -7,6 +7,7 @@ export interface Options {
     showTitle?: boolean;
     title?: string;
     useTextFile?: boolean,
+    useTSV?: boolean,
     useBom?: boolean;
     headers?: string[];
     useKeysAsHeaders?: boolean;
@@ -108,7 +109,8 @@ export class ExportToCsv {
         // Create CSV blob to download if requesting in the browser and the
         // consumer doesn't set the shouldReturnCsv param
         const FileType = this._options.useTextFile ? 'plain' : 'csv';
-        const fileExtension = this._options.useTextFile ? '.txt' : '.csv';
+        const fileExtension = this._options.useTextFile ? '.txt' :  this._options.useTSV ? '.tsv':'.csv';
+
         let blob = new Blob([this._csv], { "type": "text/" + FileType + ";charset=utf8;" });
 
         if (navigator.msSaveBlob) {
